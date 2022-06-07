@@ -49,7 +49,7 @@ export class ContactComponent implements OnInit {
 
     if (contact) {
       for (let i = 1; i < contact.telephones.length; i++) {
-        this.addTelephone();
+        this.telephones.push(this.formBuilder.control('', [Validators.required, Validators.minLength(10)]));
       }
 
       this.formGroupContact.patchValue(contact);
