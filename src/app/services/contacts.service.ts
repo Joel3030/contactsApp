@@ -42,4 +42,18 @@ export class ContactsService {
     contacts[findOne] = contact;
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }
+
+  deleteContact(contact: IContact) {
+    for (let i = 0; i < this.contacts.length; i++) {
+      if (contact == this.contacts[i]) {
+        this.contacts.splice(i, 1);
+        localStorage.setItem('contacts', JSON.stringify(this.contacts));
+      }
+    }
+  }
+
+  reset() {
+    this.contacts = contactList;
+    localStorage.setItem('contacts', JSON.stringify(this.contacts));
+  }
 }

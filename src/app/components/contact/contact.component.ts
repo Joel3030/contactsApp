@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ContactsService } from '../../services/contacts.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IContact } from '../../models/contact.model';
 
 import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
   FormArray,
   AbstractControl,
 } from '@angular/forms';
@@ -59,7 +57,14 @@ export class ContactComponent implements OnInit {
   }
 
   addTelephone() {
-    this.telephones.push(this.formBuilder.control('', Validators.required));
+
+    if (this.telephones.invalid) {
+      return Object.values(this.telephones.controls).forEach((control) => {
+        control.markAllAsTouched();
+      });
+    }
+
+    this.telephones.push(this.formBuilder.control('', [Validators.required, Validators.minLength(10)]));
   }
 
   removeTelephone(index: number) {
@@ -74,7 +79,7 @@ export class ContactComponent implements OnInit {
 		}
 
     this.contactsService.postContact(this.formGroupContact.value);
-    this.cancel();
+    this.goBack();
   }
 
   updateContact() {
@@ -85,11 +90,19 @@ export class ContactComponent implements OnInit {
 		} 
 
      this.contactsService.putContact(this.formGroupContact.getRawValue());
-     this.cancel();
+     this.goBack();
   }
 
   cancel() {
-    this.router.navigate(['/contacts']);
+    if (
+      confirm('Are you sure you want to cancel?')
+    ) {
+      this.goBack();
+    }
+
+  }
+  goBack() {
+        this.router.navigate(['/contacts']);
   }
 
 
@@ -98,9 +111,9 @@ export class ContactComponent implements OnInit {
       id: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.email],
+      email: ['', [Validators.required ,Validators.email]],
       telephones: this.formBuilder.array([
-        this.formBuilder.control('', Validators.required),
+        this.formBuilder.control('',[Validators.required, Validators.minLength(10)]),
       ]),
     });
   }

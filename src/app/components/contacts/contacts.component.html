@@ -4,6 +4,10 @@
   Add new contact
 </button>
 
+<button type="button" class="btn btn-danger mt-3 ms-1" (click)="reset()">
+  Reset
+</button>
+
 <table class="table mt-3">
   <thead>
     <tr>
@@ -31,7 +35,16 @@
           type="button"
           class="btn btn-warning"
           (click)="goToContact(contact.id)"
-        >Edit</button>
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger ms-1"
+          (click)="deleteContact(contact)"
+        >
+          Delete
+        </button>
       </td>
     </tr>
   </tbody>

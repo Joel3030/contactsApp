@@ -9,6 +9,10 @@
       id="id"
       placeholder="Enter id"
       formControlName="id"
+      [ngClass]="{
+        'is-invalid': id.invalid && (id.dirty || id.touched),
+        'is-valid': id.valid
+      }"
     />
     <app-error-message [absCtrl]="id"></app-error-message>
   </div>
@@ -20,6 +24,11 @@
       id="firstName"
       placeholder="Enter First Name"
       formControlName="firstName"
+      [ngClass]="{
+        'is-invalid':
+          firstName.invalid && (firstName.dirty || firstName.touched),
+        'is-valid': firstName.valid 
+      }"
     />
     <app-error-message [absCtrl]="firstName"></app-error-message>
   </div>
@@ -31,6 +40,10 @@
       id="lastName"
       placeholder="Enter Last Name"
       formControlName="lastName"
+      [ngClass]="{
+        'is-invalid': lastName.invalid && (lastName.dirty || lastName.touched),
+        'is-valid': lastName.valid
+      }"
     />
     <app-error-message [absCtrl]="lastName"></app-error-message>
   </div>
@@ -44,6 +57,10 @@
       aria-describedby="emailHelp"
       placeholder="Enter email"
       formControlName="email"
+      [ngClass]="{
+        'is-invalid': email.invalid && (email.dirty || email.touched),
+        'is-valid': email.valid
+      }"
     />
     <app-error-message [absCtrl]="email"></app-error-message>
   </div>
@@ -53,7 +70,6 @@
     <div
       *ngFor="let price of telephones.controls; last as isLast; let i = index"
     >
-    
       <label for="telephone + i">telephono {{ i + 1 }}</label>
 
       <div class="row">
@@ -64,9 +80,19 @@
             id="telephone + i"
             placeholder="Enter telephone"
             [formControlName]="i"
+            [ngClass]="{
+              'is-invalid':
+                telephones.controls[i].invalid &&
+                (telephones.controls[i].dirty ||
+                  telephones.controls[i].touched),
+              'is-valid': telephones.controls[i].valid
+            }"
           />
+          <app-error-message
+            [absCtrl]="telephones.controls[i]"
+          ></app-error-message>
         </div>
-  
+
         <div class="col-2">
           <button
             *ngIf="telephones.length > 1"
@@ -87,8 +113,6 @@
           </button>
         </div>
       </div>
-
-      <app-error-message [absCtrl]="telephones.controls[i]"></app-error-message>
     </div>
   </div>
 
