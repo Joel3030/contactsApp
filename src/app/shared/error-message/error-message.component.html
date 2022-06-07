@@ -1,0 +1,6 @@
+<ng-container *ngFor="let error of errorMessages">
+  <span class="text-danger"
+    *ngIf="absCtrl.hasError(error.type) && (absCtrl.dirty || absCtrl.touched)"
+    >{{ error.message }}</span
+  >
+</ng-container>

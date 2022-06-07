@@ -1,0 +1,107 @@
+<h1 class="text-center">{{ editMode ? "EDIT CONTACT" : "SAVE CONTACT" }}</h1>
+
+<form [formGroup]="formGroupContact">
+  <div class="form-group">
+    <label for="id">ID</label>
+    <input
+      type="text"
+      class="form-control"
+      id="id"
+      placeholder="Enter id"
+      formControlName="id"
+    />
+    <app-error-message [absCtrl]="id"></app-error-message>
+  </div>
+  <div class="form-group">
+    <label for="firstName">FIRST NAME</label>
+    <input
+      type="text"
+      class="form-control"
+      id="firstName"
+      placeholder="Enter First Name"
+      formControlName="firstName"
+    />
+    <app-error-message [absCtrl]="firstName"></app-error-message>
+  </div>
+  <div class="form-group">
+    <label for="firstName">LAST NAME</label>
+    <input
+      type="text"
+      class="form-control"
+      id="lastName"
+      placeholder="Enter Last Name"
+      formControlName="lastName"
+    />
+    <app-error-message [absCtrl]="lastName"></app-error-message>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      aria-describedby="emailHelp"
+      placeholder="Enter email"
+      formControlName="email"
+    />
+    <app-error-message [absCtrl]="email"></app-error-message>
+  </div>
+
+  <div formArrayName="telephones">
+    <h5>TELEPHONES</h5>
+    <div
+      *ngFor="let price of telephones.controls; last as isLast; let i = index"
+    >
+    
+      <label for="telephone + i">telephono {{ i + 1 }}</label>
+
+      <div class="row">
+        <div class="col-10">
+          <input
+            type="text"
+            class="form-control"
+            id="telephone + i"
+            placeholder="Enter telephone"
+            [formControlName]="i"
+          />
+        </div>
+  
+        <div class="col-2">
+          <button
+            *ngIf="telephones.length > 1"
+            type="button"
+            (click)="removeTelephone(i)"
+            class="btn btn-danger"
+          >
+            remove
+          </button>
+
+          <button
+            *ngIf="isLast && telephones.length < 3"
+            type="button"
+            (click)="addTelephone()"
+            class="btn btn-primary ms-1"
+          >
+            add
+          </button>
+        </div>
+      </div>
+
+      <app-error-message [absCtrl]="telephones.controls[i]"></app-error-message>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button type="button" class="btn btn-warning" (click)="cancel()">
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-success ms-1"
+      (click)="editMode ? updateContact() : saveContact()"
+    >
+      {{ editMode ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>

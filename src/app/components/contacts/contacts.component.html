@@ -1,0 +1,38 @@
+<h1 class="text-center">CONTACTS</h1>
+
+<button type="button" class="btn btn-primary mt-3" (click)="goToContact()">
+  Add new contact
+</button>
+
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Telephones</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contact of contacts">
+      <td>{{ contact.id }}</td>
+      <td>{{ contact.firstName }}</td>
+      <td>{{ contact.lastName }}</td>
+      <td>{{ contact.email }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let telephone of contact.telephones">{{ telephone }}</li>
+        </ul>
+      </td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-warning"
+          (click)="goToContact(contact.id)"
+        >Edit</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
